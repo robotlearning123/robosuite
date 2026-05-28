@@ -170,7 +170,7 @@ def gripper_controller_factory(name, params):
 
 def mobile_base_controller_factory(name, params):
     interpolator = None
-    if name == "JOINT_VELOCITY":
+    if name in ("JOINT_VELOCITY", "JOINT_VELOCITY_LEGACY"):
         return mobile_base_controllers.MobileBaseJointVelocityController(interpolator=interpolator, **params)
     elif name == "JOINT_POSITION":
         raise NotImplementedError
