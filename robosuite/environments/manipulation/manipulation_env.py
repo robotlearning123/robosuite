@@ -144,6 +144,7 @@ class ManipulationEnv(RobotEnv):
         horizon=1000,
         ignore_done=False,
         hard_reset=True,
+        load_model_on_init=True,
         camera_names="agentview",
         camera_heights=256,
         camera_widths=256,
@@ -152,6 +153,7 @@ class ManipulationEnv(RobotEnv):
         renderer="mjviewer",
         renderer_config=None,
         seed=None,
+        **kwargs,
     ):
         # Robot info
         robots = list(robots) if type(robots) is list or type(robots) is tuple else [robots]
