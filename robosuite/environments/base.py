@@ -737,7 +737,7 @@ class MujocoEnv(metaclass=EnvMeta):
         """
         Destroys the current MjSim instance if it exists
         """
-        if self.sim is not None:
+        if getattr(self, 'sim', None) is not None:
             self.sim.free()
             self.sim = None
 
