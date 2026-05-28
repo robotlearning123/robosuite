@@ -21,13 +21,15 @@ from robosuite.controllers import (
     load_composite_controller_config,
 )
 
-# Compatibility shim: robosuite master has load_controller_config, 1.5.2 has load_part_controller_config
-def load_controller_config(default_controller=None, controller=None, robot=None, **kwargs):
-    if default_controller is not None:
-        if robot is None:
-            robot = "PandaOmron"
-        return load_composite_controller_config(controller=None, robot=robot, **kwargs)
-    return load_composite_controller_config(controller=controller, robot=robot or "PandaOmron", **kwargs)
+# Compatibility shim: robosuite master has load_controller_config, 1.5.2 has load_composite_controller_config
+# default_controller is a part controller name (e.g. "OSC_POSE") — not directly usable
+# by the composite controller API. When provided, load the robot's default composite config.
+def load_controller_config(default_controller=None, controller=None, robot=None):
+    robot = robot or "PandaOmron"
+    if controller is not None:
+        return load_composite_controller_config(controller=controller, robot=robot)
+    # default_controller or no controller: load robot's default composite config
+    return load_composite_controller_config(controller=None, robot=robot)
 from robosuite.robots import ALL_ROBOTS
 from robosuite.models.grippers import ALL_GRIPPERS
 from robosuite.utils.log_utils import ROBOSUITE_DEFAULT_LOGGER
